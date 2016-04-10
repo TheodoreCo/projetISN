@@ -61,7 +61,7 @@ insert into etat (id, description, point_entree) values (112, 'Tu essayes de sor
 insert into etat (id, description, point_entree) values (113, 'Tu reviens dans le lit. Les bruits de pas se rapprochent...' , 'Je reviens à l''intérieur du lit et je feins le sommeil.')
 insert into etat (id, description, point_entree) values (114, 'Tu tournes la poignée et tu sors de la pièce.' , 'Je sors de la pièce par la porte gauche')
 
-
+ 
 insert into transition(id_source, id_cible) values (102,110)
 insert into transition(id_source, id_cible) values (102,111)
 insert into transition(id_source, id_cible) values (102,112)

@@ -38,6 +38,7 @@ import javax.swing.event.ListSelectionListener;
 import mlk.theodore.avanthica.projetisn.proto.db.Db;
 import mlk.theodore.avanthica.projetisn.proto.middle.Choix;
 import mlk.theodore.avanthica.projetisn.proto.middle.PlaySound;
+import java.awt.Color;
 
 public class GameWindow {
 
@@ -85,12 +86,14 @@ public class GameWindow {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setTitle("le TITRE");
+		frame.getContentPane().setBackground(Color.WHITE);
+		frame.setBackground(Color.WHITE);
+		frame.setTitle(" TITRE");
 		frame.getContentPane().setLayout(new GridBagLayout());
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
 		Dimension tailleEcran = toolkit.getScreenSize();
 
-		frame.setBounds(tailleEcran.width * 30 / 100, tailleEcran.height * 30 / 100, 768, 300);
+		frame.setBounds(tailleEcran.width * 25 / 100, tailleEcran.height * 35 / 100, 768, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		JScrollPane scrollPane = new JScrollPane();
@@ -101,6 +104,8 @@ public class GameWindow {
 		gbc.weightx = 1;
 		gbc.weighty = 1;
 		taEtat = new JTextArea();
+		taEtat.setBackground(new Color(0, 0, 0));
+		taEtat.setForeground(new Color(255, 255, 255));
 		taEtat.setFont(new Font("MS Reference Sans Serif", Font.PLAIN, 13));
 		taEtat.setMargin(new Insets(10, 10, 10, 10));
 		taEtat.setWrapStyleWord(true);
@@ -150,12 +155,13 @@ public class GameWindow {
 		frame.getContentPane().add(listeDecision, gbc2);
 
 		JButton btnNewButton = new JButton("OK");
+		btnNewButton.setBackground(new Color(255, 255, 204));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (listeDecision.getSelectedIndex() == -1) {
 					// System.out.println("Pas de sélection !");
-					JOptionPane.showMessageDialog(null, "Nanméoh ! T'as oublié de sélectionner l'truc ou KWA ?",
-							"Erreur super méga giga chiante", JOptionPane.WARNING_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Vous avez oublié de sélectionner un choix. Veuillez réessayer.",
+							"Oups. Vous n'avez rien sélectionné.", JOptionPane.WARNING_MESSAGE);
 					return;
 				}
 
@@ -165,7 +171,26 @@ public class GameWindow {
 				updateState(choix.getId());
 			}
 		});
+		
+		/*
+		JButton Recommencer = new JButton("Recommencer");
+		btnNewButton.setBackground(new Color(255, 255, 204));
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+			}
+			
+			Choix choix = getListeDecision().getSelectedValue();
+			updateState(choix.1());
+			
+			
+			
+			
+		});
+		*/
 		JPanel panel = new JPanel();
+		panel.setBackground(new Color(255, 255, 255));
+		panel.setForeground(new Color(0, 0, 0));
 		FlowLayout flowLayout = (FlowLayout) panel.getLayout();
 		flowLayout.setAlignment(FlowLayout.RIGHT);
 		GridBagConstraints gbc3 = new GridBagConstraints();
@@ -175,6 +200,7 @@ public class GameWindow {
 		panel.add(btnNewButton);
 
 		playMusicBtn = new JButton("Play music");
+		playMusicBtn.setBackground(new Color(255, 255, 204));
 		playMusicBtn.setIcon(new ImageIcon("./resources/images/start.gif"));
 		playMusicBtn.addActionListener(new ActionListener() {
 			@Override
@@ -185,6 +211,7 @@ public class GameWindow {
 		panel.add(playMusicBtn);
 		
 		stopMusicBtn = new JButton("Stop music");
+		stopMusicBtn.setBackground(new Color(255, 255, 204));
 		stopMusicBtn.setIcon(new ImageIcon("./resources/images/stop.gif"));
 		stopMusicBtn.addActionListener(new ActionListener() {
 			

@@ -1,2 +1,4 @@
 bin/
 db/*.log
+db/DB.properties
+db/DB.lck
