@@ -201,18 +201,18 @@ public class GameWindow {
 
 		playMusicBtn = new JButton("Play music");
 		playMusicBtn.setBackground(new Color(255, 255, 204));
-		playMusicBtn.setIcon(new ImageIcon("./resources/images/start.gif"));
+		playMusicBtn.setIcon(new ImageIcon(getClass().getResource("/resources/images/start.gif")));
 		playMusicBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				PlaySound.startPlaying("./resources/A.wav");
+				PlaySound.startPlaying("/resources/A.wav");
 			}
 		});
 		panel.add(playMusicBtn);
 		
 		stopMusicBtn = new JButton("Stop music");
 		stopMusicBtn.setBackground(new Color(255, 255, 204));
-		stopMusicBtn.setIcon(new ImageIcon("./resources/images/stop.gif"));
+		stopMusicBtn.setIcon(new ImageIcon(getClass().getResource("/resources/images/stop.gif")));
 		stopMusicBtn.addActionListener(new ActionListener() {
 			
 			@Override

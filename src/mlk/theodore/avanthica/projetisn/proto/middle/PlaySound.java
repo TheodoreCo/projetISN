@@ -1,5 +1,6 @@
 package mlk.theodore.avanthica.projetisn.proto.middle;
 
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.IOException;
 
@@ -10,7 +11,7 @@ import javax.sound.sampled.DataLine;
 import javax.sound.sampled.SourceDataLine;
 
 public class PlaySound {
-	private static final int BUFFER_SIZE = 8000;
+	private static final int BUFFER_SIZE = 4000;
 	private static Thread playingThread;
 	private static boolean running;
 	/**
@@ -18,7 +19,8 @@ public class PlaySound {
 	 *            the name of the file that is going to be played
 	 */
 	private static void playSound(String filename) {
-		try (AudioInputStream audioStream = AudioSystem.getAudioInputStream(new File(filename))) {
+		try (AudioInputStream audioStream = AudioSystem.getAudioInputStream(new BufferedInputStream(
+				PlaySound.class.getResourceAsStream(filename)))) {
 			AudioFormat audioFormat = audioStream.getFormat();
 			DataLine.Info info = new DataLine.Info(SourceDataLine.class, audioFormat);
 			try (SourceDataLine sourceLine = (SourceDataLine) AudioSystem.getLine(info)) {
