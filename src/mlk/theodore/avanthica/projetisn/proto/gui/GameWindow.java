@@ -1,4 +1,4 @@
-	package mlk.theodore.avanthica.projetisn.proto.gui;
+package mlk.theodore.avanthica.projetisn.proto.gui;
 
 import java.awt.Cursor;
 import java.awt.Dimension;
@@ -35,8 +35,11 @@ import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import kuusisto.tinysound.Music;
+import kuusisto.tinysound.TinySound;
 import mlk.theodore.avanthica.projetisn.proto.db.Db;
 import mlk.theodore.avanthica.projetisn.proto.middle.Choix;
+import mlk.theodore.avanthica.projetisn.proto.middle.Etat;
 import mlk.theodore.avanthica.projetisn.proto.middle.PlaySound;
 import java.awt.Color;
 
@@ -47,6 +50,12 @@ public class GameWindow {
 	private JTextArea taEtat;
 	private JButton playMusicBtn;
 	private JButton stopMusicBtn;
+
+	// variable utilisée pour retenir l'objet Music courant
+	private Music currentPlayingMusic;
+	// retient le nom du fichier de musique pour ne rien faire en cas de
+	// changement d'état vers un état ayant le même fichier de musique associé
+	private String currentPlayingFile;
 
 	/**
 	 * Launch the application.
@@ -117,14 +126,14 @@ public class GameWindow {
 		listeDecision = new JList<>();
 		listeDecision.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listeDecision.setFont(new Font("MS Reference Sans Serif", Font.PLAIN, 13));
-//		listeDecision.addMouseMotionListener(new MouseMotionAdapter() {
-//			@Override
-//			public void mouseMoved(MouseEvent e) {
-//				JList jl = (JList) e.getSource();
-//				int row = jl.locationToIndex(new Point(e.getX(), e.getY()));
-//				jl.setSelectedIndex(row);
-//			}
-//		});
+		// listeDecision.addMouseMotionListener(new MouseMotionAdapter() {
+		// @Override
+		// public void mouseMoved(MouseEvent e) {
+		// JList jl = (JList) e.getSource();
+		// int row = jl.locationToIndex(new Point(e.getX(), e.getY()));
+		// jl.setSelectedIndex(row);
+		// }
+		// });
 
 		listeDecision.addMouseListener(new MouseAdapter() {
 			@Override
@@ -160,7 +169,8 @@ public class GameWindow {
 			public void actionPerformed(ActionEvent arg0) {
 				if (listeDecision.getSelectedIndex() == -1) {
 					// System.out.println("Pas de sélection !");
-					JOptionPane.showMessageDialog(null, "Vous avez oublié de sélectionner un choix. Veuillez réessayer.",
+					JOptionPane.showMessageDialog(null,
+							"Vous avez oublié de sélectionner un choix. Veuillez réessayer.",
 							"Oups. Vous n'avez rien sélectionné.", JOptionPane.WARNING_MESSAGE);
 					return;
 				}
@@ -171,23 +181,23 @@ public class GameWindow {
 				updateState(choix.getId());
 			}
 		});
-		
+
 		/*
-		JButton Recommencer = new JButton("Recommencer");
-		btnNewButton.setBackground(new Color(255, 255, 204));
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				
-			}
-			
-			Choix choix = getListeDecision().getSelectedValue();
-			updateState(choix.1());
-			
-			
-			
-			
-		});
-		*/
+		 * JButton Recommencer = new JButton("Recommencer");
+		 * btnNewButton.setBackground(new Color(255, 255, 204));
+		 * btnNewButton.addActionListener(new ActionListener() { public void
+		 * actionPerformed(ActionEvent arg0) {
+		 * 
+		 * }
+		 * 
+		 * Choix choix = getListeDecision().getSelectedValue();
+		 * updateState(choix.1());
+		 * 
+		 * 
+		 * 
+		 * 
+		 * });
+		 */
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(255, 255, 255));
 		panel.setForeground(new Color(0, 0, 0));
@@ -205,19 +215,31 @@ public class GameWindow {
 		playMusicBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				PlaySound.startPlaying("/resources/A.wav");
+				if (!TinySound.isInitialized()) {
+					TinySound.init();
+				}
+
+				if (currentPlayingMusic == null) {
+					currentPlayingMusic = TinySound.loadMusic("/resources/sounds/mysterious.ogg");
+				}
+
+				currentPlayingMusic.play(true);
 			}
 		});
 		panel.add(playMusicBtn);
-		
+
 		stopMusicBtn = new JButton("Stop music");
 		stopMusicBtn.setBackground(new Color(255, 255, 204));
 		stopMusicBtn.setIcon(new ImageIcon(getClass().getResource("/resources/images/stop.gif")));
 		stopMusicBtn.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				PlaySound.stopPlaying();
+				if (currentPlayingMusic != null) {
+					currentPlayingMusic.stop();
+					currentPlayingMusic.unload();
+					currentPlayingMusic = null;
+				}
 			}
 		});
 		panel.add(stopMusicBtn);
@@ -227,6 +249,7 @@ public class GameWindow {
 			public void windowClosing(WindowEvent e) {
 				super.windowClosing(e);
 				Db.disconnect();
+				TinySound.shutdown();
 			}
 		});
 		fillInitialScreen();
@@ -254,7 +277,23 @@ public class GameWindow {
 	}
 
 	private void updateState(int position) {
-		taEtat.setText(Db.getDescription(position));
+		Etat etat = Db.getEtat(position);
+		taEtat.setText(etat.getDescription());
+
+		String nomFichierMus = etat.getNomFichierMusique();
+
+		if (nomFichierMus != null && (currentPlayingFile == null
+				|| (currentPlayingFile != null && !currentPlayingFile.equals(nomFichierMus)))) {
+			if (!TinySound.isInitialized()) {
+				TinySound.init();
+			}
+
+			if (currentPlayingMusic == null) {
+				currentPlayingMusic = TinySound.loadMusic("/resources/sounds/" + etat.getNomFichierMusique());
+			}
+
+			currentPlayingMusic.play(true);
+		}
 
 		List<Choix> listeChoix = Db.getChoices(position);
 		DefaultListModel<Choix> model = new DefaultListModel<>();

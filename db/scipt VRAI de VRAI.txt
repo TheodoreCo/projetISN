@@ -1,15 +1,15 @@
 ﻿drop table if exists transition
 create table if not exists transition(id_source integer not null, id_cible integer not null)
 drop table if exists etat
-create table if not exists etat (id integer not null, description varchar(2000) not null, point_entree varchar(200) not null)
+create table if not exists etat (id integer not null, description varchar(2000) not null, point_entree varchar(200) not null, fichier_musique varchar(30))
 
 
-insert into etat (id, description, point_entree) values (1, 'Tu ouvres lentement les yeux. Tes paupières sont lourdes,et tu sens une douleur sourde t''étreindre le crâne.
+insert into etat (id, description, point_entree, fichier_musique) values (1, 'Tu ouvres lentement les yeux. Tes paupières sont lourdes,et tu sens une douleur sourde t''étreindre le crâne.
 Tu regardes autour de toi et tu ne reconnais pas l''endroit où tu te trouves. 
 Tu te situes dans une pièce apparement vide, allongé sur un lit. Tu fermes les yeux à nouveau.
 Ta tête te fait attrocement souffrir. 
 Préfères tu surmonter ta souffrance et sortir du lit afin d''en savoir plus sur l''endroit où tu te trouves 
-ou bien essaies tu de te rendormir pour récupérer des forces?', 'Point de départ ?')
+ou bien essaies tu de te rendormir pour récupérer des forces?', 'Point de départ ?', 'mysterious.ogg')
 
 insert into etat (id, description, point_entree) values (2, 'Tu te réveilles. La salle est éclairée par une faible lumiere.
 Une porte se trouve sur ta gauche, et une autre sur ta droite. 

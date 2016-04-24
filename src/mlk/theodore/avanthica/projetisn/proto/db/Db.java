@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import mlk.theodore.avanthica.projetisn.proto.middle.Choix;
+import mlk.theodore.avanthica.projetisn.proto.middle.Etat;
 
 /**
  * Classe pour assurer l'interface avec la base de données.
@@ -52,6 +53,7 @@ public class Db {
 	 * @param position
 	 * @return
 	 */
+	/*
 	public static String getDescription(int position) {
 		String sql = "SELECT description FROM Etat WHERE id=?";
 		PreparedStatement st = null;
@@ -62,6 +64,33 @@ public class Db {
 			rs = st.executeQuery();
 			if (rs.next()) {
 				return rs.getString("description");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (rs != null) {try {rs.close();} catch (Exception ignored) {}}
+			if (st != null) {try {st.close();} catch (Exception ignored) {}}
+		}
+		return null;
+	}*/
+	
+	/**
+	 * Retourne la description associée à l'état avec id = position.
+	 * 
+	 * @param position
+	 * @return
+	 */
+	public static Etat getEtat(int position) {
+		String sql = "SELECT description, fichier_musique FROM Etat WHERE id=?";
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			st = con.prepareStatement(sql);
+			st.setInt(1, position);
+			rs = st.executeQuery();
+			if (rs.next()) {
+				Etat etat = new Etat(rs.getString("description"), rs.getString("fichier_musique"));
+				return etat;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

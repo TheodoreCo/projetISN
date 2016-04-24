@@ -1,4 +1,5 @@
 Manifest-Version: 1.0
-Class-Path: hsqldb.jar
+Class-Path: hsqldb.jar tinysound-1.1.1.jar tritonus_share.jar 
+ vorbisspi1.0.3.jar jorbis-0.0.17.jar
 Main-Class: mlk.theodore.avanthica.projetisn.proto.gui.GameWindow
 
