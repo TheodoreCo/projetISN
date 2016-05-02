@@ -15,7 +15,24 @@ insert into etat (id, description, point_entree) values (2, 'Tu te réveilles. L
 Une porte se trouve sur ta gauche, et une autre sur ta droite. 
 Que fais tu ?', 'Je me réveille')
 
-insert into etat (id, description, point_entree) values (3, 'Tu te rendors' , 'Je me rendors')
+insert into etat (id, description, point_entree) values (3, 'Exténué, tu refermes tes paupières et sombres dans un sommeil de plomb. Tu es révéillé brusquement par un bruit de pas qui semblent s''avancer vers la chambre dans laquelle tu trouves.
+Tu regardes autour de toi. Tu te trouves à l''intérieur d''une petite pièce, éclairée faiblement par une lampe suspendue au plafond.
+Une porte se situe à ta droite, et une autre à ta gauche. Tu remarques que la serrure de la porte droite est rouillée. Que fais-tu?' , 'Je me rendors')
+
+insert into etat (id, description, point_entree) values (200, 'Suspicieux à propos de l'endroit où tu te trouves, tu te caches sous le lit.', 'Je me cache sous le lit.')
+
+insert into etat (id, description, point_entree) values (201, 'Intrigué par ta situation, tu préfères attendre et voir comment vont se dérouler les évenements.', 'Tu restes dans le lit sans rien faire')
+
+insert into etat (id, description, point_entree) values (202, 'Effrayé, tu essaies de sortir de cette salle en actionnant la poignée de la porte droite.
+Malheuresement, cette porte est VEROUILLEE, tu ne sors donc pas de la salle ', 'Tu essaies de sortir par la porte droite')
+
+insert into etat (id, description, point_entree) values (203, 'Effrayé, tu essaies de sortir de cette salle en actionnant la poignée de la porte gauche.
+La porte n'étant PAS VEROUILLEE, tu sors de la salle.', 'Tu essaies de sortir par la porte gauche')
+
+insert into transition(id_source, id_cible) values (3,201)
+insert into transition(id_source, id_cible) values (3,202)
+insert into transition(id_source, id_cible) values (3,203)
+insert into transition(id_source, id_cible) values (3,200)
 
 insert into etat (id, description, point_entree) values (4, 'Tu te diriges vers la porte gauche. Tu tournes la poignée et tu sors de la pièce.Puis soudainement tu entends des bruits de pas.', 'J''essaie de sortir de la piece par la porte gauche')
 
@@ -72,3 +89,4 @@ insert into transition(id_source, id_cible) values (101,111)
 insert into transition(id_source, id_cible) values (101,112)
 insert into transition(id_source, id_cible) values (101,113)
 insert into transition(id_source, id_cible) values (101,114)
+
