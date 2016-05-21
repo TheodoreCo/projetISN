@@ -19,7 +19,11 @@ insert into etat (id, description, point_entree) values (3, 'Exténué, tu refer
 Tu regardes autour de toi. Tu te trouves à l''intérieur d''une petite pièce, éclairée faiblement par une lampe suspendue au plafond.
 Une porte se situe à ta droite, et une autre à ta gauche. Tu remarques que la serrure de la porte droite est rouillée. Que fais-tu?' , 'Je me rendors')
 
-insert into etat (id, description, point_entree) values (200, 'Suspicieux à propos de l''endroit où tu te trouves, tu te caches sous le lit.', 'Je me cache sous le lit.')
+insert into etat (id, description, point_entree) values (200, 'Suspicieux à propos de l''endroit où tu te trouves, tu te caches sous le lit.
+
+Tu entends les bruits de pas se rapprocher. La porte s''ouvre brusquement, et tu entends quelqu''un entrer dans la salle. Après un dernier moment de silence, celui-ci s''exclame:
+
+-Le sujet de test s''est échappé!', 'Je me cache sous le lit.')
 
 insert into etat (id, description, point_entree) values (201, 'Intrigué par ta situation, tu préfères attendre et voir comment vont se dérouler les évenements.', 'Tu restes dans le lit sans rien faire')
 
@@ -58,7 +62,7 @@ Regardant autour de toi, tu remarques que ces lieux ne ressemblent pas vraiment 
 
 insert into etat (id, description, point_entree) values (10, 'tu prends la fuite ' , 'Je fais demi-tour, et je m''enfuis!')
 
-insert into etat (id, description, point_entree) values (11, 'tu prends la fuite ' , 'Je le FRAPPE!  (yolo)')
+insert into etat (id, description, point_entree,fichier_musique) values (11,' ','Je le FRAPPE!  (yolo)', 'abyss.ogg')
 
 
 
@@ -71,6 +75,8 @@ insert into transition(id_source, id_cible) values (4,7)
 insert into transition(id_source, id_cible) values (4,8)
 insert into transition(id_source, id_cible) values (8,9)
 insert into transition(id_source, id_cible) values (8,10)
+insert into transition(id_source, id_cible) values (8,11)
+
 insert into transition(id_source, id_cible) values (5,9)
 insert into transition(id_source, id_cible) values (5,10)
 insert into transition(id_source, id_cible) values (6,9)
@@ -102,5 +108,5 @@ insert into transition(id_source, id_cible) values (101,110)
 insert into transition(id_source, id_cible) values (101,111)
 insert into transition(id_source, id_cible) values (101,112)
 insert into transition(id_source, id_cible) values (101,113)
-insert into transition(id_source, id_cible) values (101,114)
+insert into transition(id_source, id_cible) values (101,114)	
 

@@ -14,6 +14,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -126,6 +127,40 @@ public class GameWindow {
 		listeDecision = new JList<>();
 		listeDecision.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listeDecision.setFont(new Font("MS Reference Sans Serif", Font.PLAIN, 13));
+		listeDecision.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				System.out.println("La souris est sortie de la zone cible");
+				
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				System.out.println("La souris est entrée dans la zone cible");
+				
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (e.getClickCount() == 2) {
+					Choix choix = getListeDecision().getSelectedValue();
+					updateState(choix.getId());	
+				}
+			}
+		});
 		// listeDecision.addMouseMotionListener(new MouseMotionAdapter() {
 		// @Override
 		// public void mouseMoved(MouseEvent e) {
@@ -220,7 +255,7 @@ public class GameWindow {
 				}
 
 				if (currentPlayingMusic == null) {
-					currentPlayingMusic = TinySound.loadMusic("/resources/sounds/mysterious.ogg");
+					currentPlayingMusic = TinySound.loadMusic("/resources/sounds/abyss.ogg");
 				}
 
 				currentPlayingMusic.play(true);
@@ -288,10 +323,12 @@ public class GameWindow {
 				TinySound.init();
 			}
 
-			if (currentPlayingMusic == null) {
-				currentPlayingMusic = TinySound.loadMusic("/resources/sounds/" + etat.getNomFichierMusique());
+			if (currentPlayingMusic != null) {
+				currentPlayingMusic.stop();
+				currentPlayingMusic.unload();
 			}
-
+			
+			currentPlayingMusic = TinySound.loadMusic("/resources/sounds/" + etat.getNomFichierMusique());
 			currentPlayingMusic.play(true);
 		}
 

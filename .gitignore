@@ -3,3 +3,4 @@ db/*.log
 db/DB.properties
 db/DB.lck
 ~$*.docx
+db/DB.script
