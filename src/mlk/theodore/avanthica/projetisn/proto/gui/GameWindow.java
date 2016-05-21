@@ -45,7 +45,7 @@ import java.awt.Color;
 
 public class GameWindow {
 
-	private JFrame frame;
+	private JFrame frmHagalab;
 	private JList<Choix> listeDecision;
 	private JTextArea taEtat;
 	private JButton playMusicBtn;
@@ -74,7 +74,7 @@ public class GameWindow {
 				}
 				try {
 					GameWindow window = new GameWindow();
-					window.frame.setVisible(true);
+					window.frmHagalab.setVisible(true);
 
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -94,16 +94,16 @@ public class GameWindow {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
-		frame.getContentPane().setBackground(Color.WHITE);
-		frame.setBackground(Color.WHITE);
-		frame.setTitle(" TITRE");
-		frame.getContentPane().setLayout(new GridBagLayout());
+		frmHagalab = new JFrame();
+		frmHagalab.getContentPane().setBackground(Color.WHITE);
+		frmHagalab.setBackground(Color.WHITE);
+		frmHagalab.setTitle("HAGALAB");
+		frmHagalab.getContentPane().setLayout(new GridBagLayout());
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
 		Dimension tailleEcran = toolkit.getScreenSize();
 
-		frame.setBounds(tailleEcran.width * 25 / 100, tailleEcran.height * 35 / 100, 768, 300);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmHagalab.setBounds(tailleEcran.width * 25 / 100, tailleEcran.height * 30 / 100, 768, 430);
+		frmHagalab.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		JScrollPane scrollPane = new JScrollPane();
 		GridBagConstraints gbc = new GridBagConstraints();
@@ -121,7 +121,7 @@ public class GameWindow {
 		taEtat.setLineWrap(true);
 		taEtat.setEditable(false);
 		scrollPane.setViewportView(taEtat);
-		frame.getContentPane().add(scrollPane, gbc);
+		frmHagalab.getContentPane().add(scrollPane, gbc);
 
 		listeDecision = new JList<>();
 		listeDecision.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -138,12 +138,12 @@ public class GameWindow {
 		listeDecision.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				frame.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+				frmHagalab.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 			}
 
 			@Override
 			public void mouseExited(MouseEvent e) {
-				frame.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+				frmHagalab.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 			}
 		});
 
@@ -161,7 +161,7 @@ public class GameWindow {
 		gbc2.gridy = 1;
 		gbc2.weighty = 1;
 		gbc2.fill = GridBagConstraints.BOTH;
-		frame.getContentPane().add(listeDecision, gbc2);
+		frmHagalab.getContentPane().add(listeDecision, gbc2);
 
 		JButton btnNewButton = new JButton("OK");
 		btnNewButton.setBackground(new Color(255, 255, 204));
@@ -206,7 +206,7 @@ public class GameWindow {
 		GridBagConstraints gbc3 = new GridBagConstraints();
 		gbc3.gridx = 0;
 		gbc3.gridy = 2;
-		frame.getContentPane().add(panel, gbc3);
+		frmHagalab.getContentPane().add(panel, gbc3);
 		panel.add(btnNewButton);
 
 		playMusicBtn = new JButton("Play music");
@@ -244,7 +244,7 @@ public class GameWindow {
 		});
 		panel.add(stopMusicBtn);
 
-		frame.addWindowListener(new WindowAdapter() {
+		frmHagalab.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
 				super.windowClosing(e);

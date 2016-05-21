@@ -19,7 +19,7 @@ insert into etat (id, description, point_entree) values (3, 'Exténué, tu refer
 Tu regardes autour de toi. Tu te trouves à l''intérieur d''une petite pièce, éclairée faiblement par une lampe suspendue au plafond.
 Une porte se situe à ta droite, et une autre à ta gauche. Tu remarques que la serrure de la porte droite est rouillée. Que fais-tu?' , 'Je me rendors')
 
-insert into etat (id, description, point_entree) values (200, 'Suspicieux à propos de l'endroit où tu te trouves, tu te caches sous le lit.', 'Je me cache sous le lit.')
+insert into etat (id, description, point_entree) values (200, 'Suspicieux à propos de l''endroit où tu te trouves, tu te caches sous le lit.', 'Je me cache sous le lit.')
 
 insert into etat (id, description, point_entree) values (201, 'Intrigué par ta situation, tu préfères attendre et voir comment vont se dérouler les évenements.', 'Tu restes dans le lit sans rien faire')
 
@@ -27,14 +27,16 @@ insert into etat (id, description, point_entree) values (202, 'Effrayé, tu essa
 Malheuresement, cette porte est VEROUILLEE, tu ne sors donc pas de la salle ', 'Tu essaies de sortir par la porte droite')
 
 insert into etat (id, description, point_entree) values (203, 'Effrayé, tu essaies de sortir de cette salle en actionnant la poignée de la porte gauche.
-La porte n'étant PAS VEROUILLEE, tu sors de la salle.', 'Tu essaies de sortir par la porte gauche')
+La porte n''étant PAS VEROUILLEE, tu sors de la salle.', 'Tu essaies de sortir par la porte gauche')
 
 insert into transition(id_source, id_cible) values (3,201)
 insert into transition(id_source, id_cible) values (3,202)
 insert into transition(id_source, id_cible) values (3,203)
 insert into transition(id_source, id_cible) values (3,200)
 
-insert into etat (id, description, point_entree) values (4, 'Tu te diriges vers la porte gauche. Tu tournes la poignée et tu sors de la pièce.Puis soudainement tu entends des bruits de pas.', 'J''essaie de sortir de la piece par la porte gauche')
+insert into etat (id, description, point_entree) values (4, 'Tu te diriges vers la porte gauche. Tu tournes la poignée et tu sors de la pièce, pour arriver dans un sombre CORRIDOR.
+
+Un escalier se trouve à ta droite, et le corridor vire à gauche, tu ne peux donc pas en voir la fin. Tu es en train de réfléchir à ce que tu vas faire, quand soudainement tu entends des bruits de pas, venant du fond du couloir! Que fais tu?', 'J''essaie de sortir de la piece par la porte gauche')
 
 insert into etat (id, description, point_entree) values (5, 'tu rentres dans la chambre pour attendre que les bruits de pas cessent,et tu te retrouves face a un scientifique ' , 'je repars dans la chambre')
 
@@ -42,11 +44,23 @@ insert into etat (id, description, point_entree) values (6, 'tu patientes ... po
 
 insert into etat (id, description, point_entree) values (7, 'tu prends les escaliers pour t''enfuir' , 'je prends les escaliers')
 
-insert into etat (id, description, point_entree) values (8, 'tu te diriges vers les bruits de pas et tu tombes sur un scientifique ' , 'je vois d''où viennent les pas')
 
-insert into etat (id, description, point_entree) values (9, 'tu discutes avec le scientifique' , 'tu le trouves sympatique')
 
-insert into etat (id, description, point_entree) values (10, 'tu prends la fuite ' , 'tu le trouves effrayant')
+insert into etat (id, description, point_entree) values (8, 'Tu suis le couloir, tu tournes à gauche et tu retrouves face à face à un homme d''âge moyen, vêtu d''une blouse de laboratoire. Cet homme, t''apercevant, à l''air d''être désagréablement surpris de te rencontrer, et te fixe d''un air interrogateur.
+
+Préfères tu engager une conversation avec lui, te retourner et courir, ou bien le frapper?' ,'Je progresse dans le couloir dans la direction des bruits de pas.')
+
+insert into etat (id, description, point_entree) values (9, 'Tu demandes la raison pour laquelle tu te trouves dans ce bâtiment. La personne en blouse de laboratoire te répond d''une voix ennuyée que suite à un accident de la route, tu as été hospitalisé et il semble que tu aies perdu une partie une partie de ta mémoire.
+
+Elle te demande poliment de regagner ta chambre et d''attendre.
+
+Regardant autour de toi, tu remarques que ces lieux ne ressemblent pas vraiment à un hopital. Le scientifique fait demi-tour, et...' , 'J''engage la conversation.')
+
+insert into etat (id, description, point_entree) values (10, 'tu prends la fuite ' , 'Je fais demi-tour, et je m''enfuis!')
+
+insert into etat (id, description, point_entree) values (11, 'tu prends la fuite ' , 'Je le FRAPPE!  (yolo)')
+
+
 
 insert into transition(id_source, id_cible) values (1,2)
 insert into transition(id_source, id_cible) values (1,3)
