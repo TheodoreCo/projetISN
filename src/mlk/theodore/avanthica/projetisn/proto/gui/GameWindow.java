@@ -46,16 +46,16 @@ import java.awt.Color;
 
 public class GameWindow {
 
-	private JFrame frmHagalab;
+	private JFrame mainFrame;
 	private JList<Choix> listeDecision;
 	private JTextArea taEtat;
 	private JButton playMusicBtn;
 	private JButton stopMusicBtn;
 
-	// variable utilisée pour retenir l'objet Music courant
+	// variable utilisée pour retenir l'objet Music courant (nécessaire pour la bibliothèque TinyMusic)
 	private Music currentPlayingMusic;
-	// retient le nom du fichier de musique pour ne rien faire en cas de
-	// changement d'état vers un état ayant le même fichier de musique associé
+	
+	// retient le nom du fichier de musique pour pouvoir l'utilser depuis les boutons Start & Stop music
 	private String currentPlayingFile;
 
 	/**
@@ -64,18 +64,22 @@ public class GameWindow {
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
+				// Construit le look and feel de l'application
 				try {
 					for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+						// System.out.println(info.getName());
 						if ("Nimbus".equals(info.getName())) {
 							UIManager.setLookAndFeel(info.getClassName());
 							break;
 						}
 					}
 				} catch (Exception e) {
+					// e.printStackTrace(); Pas besoin de faire quelque chose de spécifique
 				}
+				
 				try {
 					GameWindow window = new GameWindow();
-					window.frmHagalab.setVisible(true);
+					window.mainFrame.setVisible(true);
 
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -95,16 +99,20 @@ public class GameWindow {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frmHagalab = new JFrame();
-		frmHagalab.getContentPane().setBackground(Color.WHITE);
-		frmHagalab.setBackground(Color.WHITE);
-		frmHagalab.setTitle("HAGALAB");
-		frmHagalab.getContentPane().setLayout(new GridBagLayout());
+		mainFrame = new JFrame();
+		mainFrame.getContentPane().setBackground(Color.WHITE);
+		// mainFrame.setBackground(Color.WHITE);
+		mainFrame.setTitle("HAGALAB");
+		mainFrame.getContentPane().setLayout(new GridBagLayout());
+		
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
 		Dimension tailleEcran = toolkit.getScreenSize();
 
-		frmHagalab.setBounds(tailleEcran.width * 25 / 100, tailleEcran.height * 30 / 100, 768, 430);
-		frmHagalab.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		mainFrame.setBounds(tailleEcran.width * 1 / 5,
+				tailleEcran.height * 1 / 4,
+				tailleEcran.width * 3 / 5,
+				tailleEcran.height * 2 / 4);
+		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		JScrollPane scrollPane = new JScrollPane();
 		GridBagConstraints gbc = new GridBagConstraints();
@@ -117,42 +125,21 @@ public class GameWindow {
 		taEtat.setBackground(new Color(0, 0, 0));
 		taEtat.setForeground(new Color(255, 255, 255));
 		taEtat.setFont(new Font("MS Reference Sans Serif", Font.PLAIN, 13));
-		taEtat.setMargin(new Insets(10, 10, 10, 10));
-		taEtat.setWrapStyleWord(true);
-		taEtat.setLineWrap(true);
+		taEtat.setMargin(new Insets(10, 10, 10, 10)); // Laisser de l'espace autour du texte
+		taEtat.setLineWrap(true); // Pour passer automatiquement à la ligne
+		taEtat.setWrapStyleWord(true); // Pour ne pas couper les mots
 		taEtat.setEditable(false);
-		scrollPane.setViewportView(taEtat);
-		frmHagalab.getContentPane().add(scrollPane, gbc);
+		scrollPane.setViewportView(taEtat); // C'est le "add" spécifique lorsque l'on veut lier un composant (comme une JTextArea) à
+		// un ScollPane
+		mainFrame.getContentPane().add(scrollPane, gbc);
 
 		listeDecision = new JList<>();
 		listeDecision.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listeDecision.setFont(new Font("MS Reference Sans Serif", Font.PLAIN, 13));
-		listeDecision.addMouseListener(new MouseListener() {
-			
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void mouseExited(MouseEvent e) {
-				System.out.println("La souris est sortie de la zone cible");
-				
-			}
-			
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				System.out.println("La souris est entrée dans la zone cible");
-				
-			}
-			
+		
+		// Rajout d'un listener pour les doubles-click sur un élément de la liste
+		listeDecision.addMouseListener(new MouseAdapter() {
+	
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 2) {
@@ -160,28 +147,19 @@ public class GameWindow {
 					updateState(choix.getId());	
 				}
 			}
-		});
-		// listeDecision.addMouseMotionListener(new MouseMotionAdapter() {
-		// @Override
-		// public void mouseMoved(MouseEvent e) {
-		// JList jl = (JList) e.getSource();
-		// int row = jl.locationToIndex(new Point(e.getX(), e.getY()));
-		// jl.setSelectedIndex(row);
-		// }
-		// });
-
-		listeDecision.addMouseListener(new MouseAdapter() {
+			
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				frmHagalab.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+				mainFrame.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 			}
 
 			@Override
 			public void mouseExited(MouseEvent e) {
-				frmHagalab.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+				mainFrame.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 			}
 		});
 
+		// Afficher à la console l'élément de liste sélectionné
 		listeDecision.addListSelectionListener(new ListSelectionListener() {
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
@@ -191,16 +169,18 @@ public class GameWindow {
 
 			}
 		});
+		
 		GridBagConstraints gbc2 = new GridBagConstraints();
 		gbc2.gridx = 0;
 		gbc2.gridy = 1;
 		gbc2.weighty = 1;
 		gbc2.fill = GridBagConstraints.BOTH;
-		frmHagalab.getContentPane().add(listeDecision, gbc2);
+		mainFrame.getContentPane().add(listeDecision, gbc2);
 
-		JButton btnNewButton = new JButton("OK");
-		btnNewButton.setBackground(new Color(255, 255, 204));
-		btnNewButton.addActionListener(new ActionListener() {
+		JButton okButton = new JButton("OK");
+		okButton.setMnemonic('O');
+		okButton.setBackground(new Color(255, 255, 204));
+		okButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (listeDecision.getSelectedIndex() == -1) {
 					// System.out.println("Pas de sélection !");
@@ -217,34 +197,18 @@ public class GameWindow {
 			}
 		});
 
-		/*
-		 * JButton Recommencer = new JButton("Recommencer");
-		 * btnNewButton.setBackground(new Color(255, 255, 204));
-		 * btnNewButton.addActionListener(new ActionListener() { public void
-		 * actionPerformed(ActionEvent arg0) {
-		 * 
-		 * }
-		 * 
-		 * Choix choix = getListeDecision().getSelectedValue();
-		 * updateState(choix.1());
-		 * 
-		 * 
-		 * 
-		 * 
-		 * });
-		 */
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(255, 255, 255));
-		panel.setForeground(new Color(0, 0, 0));
-		FlowLayout flowLayout = (FlowLayout) panel.getLayout();
-		flowLayout.setAlignment(FlowLayout.RIGHT);
+		
+		panel.setBackground(Color.WHITE);
+		panel.setForeground(Color.BLACK);
 		GridBagConstraints gbc3 = new GridBagConstraints();
 		gbc3.gridx = 0;
 		gbc3.gridy = 2;
-		frmHagalab.getContentPane().add(panel, gbc3);
-		panel.add(btnNewButton);
+		mainFrame.getContentPane().add(panel, gbc3);
+		panel.add(okButton);
 
 		playMusicBtn = new JButton("Play music");
+		playMusicBtn.setMnemonic('P');
 		playMusicBtn.setBackground(new Color(255, 255, 204));
 		playMusicBtn.setIcon(new ImageIcon(getClass().getResource("/resources/images/start.gif")));
 		playMusicBtn.addActionListener(new ActionListener() {
@@ -254,16 +218,16 @@ public class GameWindow {
 					TinySound.init();
 				}
 
-				if (currentPlayingMusic == null) {
-					currentPlayingMusic = TinySound.loadMusic("/resources/sounds/abyss.ogg");
+				if (currentPlayingMusic == null && currentPlayingFile != null) {
+					currentPlayingMusic = TinySound.loadMusic(currentPlayingFile);
+					currentPlayingMusic.play(true);
 				}
-
-				currentPlayingMusic.play(true);
 			}
 		});
 		panel.add(playMusicBtn);
 
 		stopMusicBtn = new JButton("Stop music");
+		stopMusicBtn.setMnemonic('S');
 		stopMusicBtn.setBackground(new Color(255, 255, 204));
 		stopMusicBtn.setIcon(new ImageIcon(getClass().getResource("/resources/images/stop.gif")));
 		stopMusicBtn.addActionListener(new ActionListener() {
@@ -279,7 +243,7 @@ public class GameWindow {
 		});
 		panel.add(stopMusicBtn);
 
-		frmHagalab.addWindowListener(new WindowAdapter() {
+		mainFrame.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
 				super.windowClosing(e);
@@ -317,8 +281,7 @@ public class GameWindow {
 
 		String nomFichierMus = etat.getNomFichierMusique();
 
-		if (nomFichierMus != null && (currentPlayingFile == null
-				|| (currentPlayingFile != null && !currentPlayingFile.equals(nomFichierMus)))) {
+		if (nomFichierMus != null) {
 			if (!TinySound.isInitialized()) {
 				TinySound.init();
 			}
@@ -328,7 +291,8 @@ public class GameWindow {
 				currentPlayingMusic.unload();
 			}
 			
-			currentPlayingMusic = TinySound.loadMusic("/resources/sounds/" + etat.getNomFichierMusique());
+			currentPlayingFile = "/resources/sounds/" + etat.getNomFichierMusique();
+			currentPlayingMusic = TinySound.loadMusic(currentPlayingFile);
 			currentPlayingMusic.play(true);
 		}
 
