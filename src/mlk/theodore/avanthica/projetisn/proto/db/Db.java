@@ -20,7 +20,7 @@ import mlk.theodore.avanthica.projetisn.proto.middle.Etat;
 public class Db {
 	// variable de classe indispensable pour travailler avec une base de données
 	private static Connection con;
-
+	
 	/**
 	 * Méthode qui initialise la connexion
 	 * 
@@ -41,7 +41,7 @@ public class Db {
 		if (con != null) {
 			try {
 				con.close();
-			} catch (Exception ignored) {
+			} catch (SQLException ignored) {
 			}
 		}
 		System.out.println("Connexion fermée");
@@ -53,35 +53,9 @@ public class Db {
 	 * @param position
 	 * @return
 	 */
-	/*
-	public static String getDescription(int position) {
-		String sql = "SELECT description FROM Etat WHERE id=?";
-		PreparedStatement st = null;
-		ResultSet rs = null;
-		try {
-			st = con.prepareStatement(sql);
-			st.setInt(1, position);
-			rs = st.executeQuery();
-			if (rs.next()) {
-				return rs.getString("description");
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			if (rs != null) {try {rs.close();} catch (Exception ignored) {}}
-			if (st != null) {try {st.close();} catch (Exception ignored) {}}
-		}
-		return null;
-	}*/
-	
-	/**
-	 * Retourne la description associée à l'état avec id = position.
-	 * 
-	 * @param position
-	 * @return
-	 */
 	public static Etat getEtat(int position) {
 		String sql = "SELECT description, fichier_musique FROM Etat WHERE id=?";
+		
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		try {
@@ -98,6 +72,7 @@ public class Db {
 			if (rs != null) {try {rs.close();} catch (Exception ignored) {}}
 			if (st != null) {try {st.close();} catch (Exception ignored) {}}
 		}
+		
 		return null;
 	}
 

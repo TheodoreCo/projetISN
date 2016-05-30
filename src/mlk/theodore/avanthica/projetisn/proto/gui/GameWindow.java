@@ -1,21 +1,18 @@
 package mlk.theodore.avanthica.projetisn.proto.gui;
 
+import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.EventQueue;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionAdapter;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.SQLException;
@@ -41,8 +38,7 @@ import kuusisto.tinysound.TinySound;
 import mlk.theodore.avanthica.projetisn.proto.db.Db;
 import mlk.theodore.avanthica.projetisn.proto.middle.Choix;
 import mlk.theodore.avanthica.projetisn.proto.middle.Etat;
-import mlk.theodore.avanthica.projetisn.proto.middle.PlaySound;
-import java.awt.Color;
+import javax.swing.border.EtchedBorder;
 
 public class GameWindow {
 
@@ -102,7 +98,7 @@ public class GameWindow {
 		mainFrame = new JFrame();
 		mainFrame.getContentPane().setBackground(Color.WHITE);
 		// mainFrame.setBackground(Color.WHITE);
-		mainFrame.setTitle("HAGALAB");
+ 		mainFrame.setTitle("HAGALAB");
 		mainFrame.getContentPane().setLayout(new GridBagLayout());
 		
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
@@ -122,8 +118,8 @@ public class GameWindow {
 		gbc.weightx = 1;
 		gbc.weighty = 1;
 		taEtat = new JTextArea();
-		taEtat.setBackground(new Color(0, 0, 0));
-		taEtat.setForeground(new Color(255, 255, 255));
+		taEtat.setBackground(new Color(0, 0, 0)); // black
+		taEtat.setForeground(new Color(255, 255, 255)); // white
 		taEtat.setFont(new Font("MS Reference Sans Serif", Font.PLAIN, 13));
 		taEtat.setMargin(new Insets(10, 10, 10, 10)); // Laisser de l'espace autour du texte
 		taEtat.setLineWrap(true); // Pour passer automatiquement à la ligne
@@ -166,7 +162,6 @@ public class GameWindow {
 				if (!e.getValueIsAdjusting()) {
 					System.out.println("Element de la liste cliqué: " + listeDecision.getSelectedValue());
 				}
-
 			}
 		});
 		
@@ -198,6 +193,7 @@ public class GameWindow {
 		});
 
 		JPanel panel = new JPanel();
+		panel.setBorder(null);
 		
 		panel.setBackground(Color.WHITE);
 		panel.setForeground(Color.BLACK);
@@ -290,7 +286,7 @@ public class GameWindow {
 				currentPlayingMusic.stop();
 				currentPlayingMusic.unload();
 			}
-			
+
 			currentPlayingFile = "/resources/sounds/" + etat.getNomFichierMusique();
 			currentPlayingMusic = TinySound.loadMusic(currentPlayingFile);
 			currentPlayingMusic.play(true);
