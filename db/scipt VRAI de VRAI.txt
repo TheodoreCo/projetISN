@@ -1,69 +1,115 @@
-ï»¿drop table if exists transition
+drop table if exists transition
 create table if not exists transition(id_source integer not null, id_cible integer not null)
 drop table if exists etat
 create table if not exists etat (id integer not null, description varchar(2000) not null, point_entree varchar(200) not null, fichier_musique varchar(30))
 
 
-insert into etat (id, description, point_entree, fichier_musique) values (1, 'Tu ouvres lentement les yeux. Tes paupiÃ¨res sont lourdes,et tu sens une douleur sourde t''Ã©treindre le crÃ¢ne.
-Tu regardes autour de toi et tu ne reconnais pas l''endroit oÃ¹ tu te trouves. 
-Tu te situes dans une piÃ¨ce apparement vide, allongÃ© sur un lit. Tu fermes les yeux Ã  nouveau.
-Ta tÃªte te fait attrocement souffrir. 
-PrÃ©fÃ¨res tu surmonter ta souffrance et sortir du lit afin d''en savoir plus sur l''endroit oÃ¹ tu te trouves 
-ou bien essaies tu de te rendormir pour rÃ©cupÃ©rer des forces?', 'Point de dÃ©part ?', 'mysterious.ogg')
+insert into etat (id, description, point_entree, fichier_musique) values (1, 'Tu ouvres lentement les yeux. Tes paupières sont lourdes,et tu sens une douleur sourde t''étreindre le crâne.
+Tu regardes autour de toi et tu ne reconnais pas l''endroit où tu te trouves. 
+Tu te situes dans une pièce apparement vide, allongé sur un lit. Tu fermes les yeux à nouveau.
+Ta tête te fait attrocement souffrir. 
+Préfères tu surmonter ta souffrance et sortir du lit afin d''en savoir plus sur l''endroit où tu te trouves 
+ou bien essaies tu de te rendormir pour récupérer des forces?', 'Point de départ ?', 'The_room.ogg')
 
-insert into etat (id, description, point_entree) values (2, 'Tu te rÃ©veilles. La salle est Ã©clairÃ©e par une faible lumiere.
+insert into etat (id, description, point_entree) values (2, 'Tu te réveilles. La salle est éclairée par une faible lumiere.
 Une porte se trouve sur ta gauche, et une autre sur ta droite. 
-Que fais tu ?', 'Je me rÃ©veille')
+Que fais tu ?', 'Je me réveille')
 
-insert into etat (id, description, point_entree) values (3, 'ExtÃ©nuÃ©, tu refermes tes paupiÃ¨res et sombres dans un sommeil de plomb. Tu es rÃ©vÃ©illÃ© brusquement par un bruit de pas qui semblent s''avancer vers la chambre dans laquelle tu trouves.
-Tu regardes autour de toi. Tu te trouves Ã  l''intÃ©rieur d''une petite piÃ¨ce, Ã©clairÃ©e faiblement par une lampe suspendue au plafond.
-Une porte se situe Ã  ta droite, et une autre Ã  ta gauche. Tu remarques que la serrure de la porte droite est rouillÃ©e. Que fais-tu?' , 'Je me rendors')
+insert into etat (id, description, point_entree) values (3, 'Exténué, tu refermes tes paupières et sombres dans un sommeil de plomb. Tu es révéillé brusquement par un bruit de pas qui semblent s''avancer vers la chambre dans laquelle tu trouves.
+Tu regardes autour de toi. Tu te trouves à l''intérieur d''une petite pièce, éclairée faiblement par une lampe suspendue au plafond.
+Une porte se situe à ta droite, et une autre à ta gauche. Tu remarques que la serrure de la porte droite est rouillée. Que fais-tu?' , 'Je me rendors')
 
 insert into etat (id, description, point_entree) values (200, 'Tu te caches sous le lit.
 
-Tu entends les bruits de pas se rapprocher. La porte s''ouvre brusquement, et tu entends quelqu''un entrer dans la salle. AprÃ¨s un dernier moment de silence, celui-ci s''exclame:
+Tu entends les bruits de pas se rapprocher. La porte s''ouvre brusquement, et tu entends quelqu''un entrer dans la salle. Après un dernier moment de silence, celui-ci s''exclame:
 
--Le sujet de test s''est Ã©chappÃ©! Puis, celui-ci semble se retourner et cherche quelque chose dans la poche de son pantalon gris (tu n''arrives Ã  voir que les jambes depuis l''endroit oÃ¹ tu es). Il est placÃ© entre toi et la porte gauche. 
+-Le sujet de test s''est échappé! Puis, celui-ci semble se retourner et cherche quelque chose dans la poche de son pantalon gris (tu n''arrives à voir que les jambes depuis l''endroit où tu es). Il est placé entre toi et la porte gauche. 
 
-Restes-tu sous le lit dans l''espoir que l''homme au pantalon gris ne te remarque pas, essaies tu de sortir du lit silencieusement et de t''Ã©chapper par la porte droite ou bien essaies-tu de de sortir silencieusement du lit et d''attaquer l''homme par derriÃ¨re? ', 'Je me cache sous le lit.')
+Restes-tu sous le lit dans l''espoir que l''homme au pantalon gris ne te remarque pas, essaies tu de sortir du lit silencieusement et de t''échapper par la porte droite ou bien essaies-tu de de sortir silencieusement du lit et d''attaquer l''homme par derrière? ', 'Je me cache sous le lit.')
 
 insert into transition(id_source, id_cible) values (200,300)
 
-insert into etat (id, description, point_entree) values (300, 'Tu restes sous le lit. L''homme sort un petit tÃ©lÃ©phone de la poche de son pantalon, puis crie d''une voix forte et angoissÃ©e dans le tÃ©lÃ©phone:
+insert into etat (id, description, point_entree, fichier_musique) values (300, 'Tu restes sous le lit. L''homme sort un petit téléphone de la poche de son pantalon, puis crie d''une voix forte et angoissée dans le téléphone:
 
 LE SUJET NUMERO 42 S''EST ECHAPPE! Retrouvez le! Il ne faut surtout pas qu''il quitte hagalab... sinon il deviendrera un danger pour nous... Empechez le de sortir, qu''il soit vivant ou mort. Sur ce, le scientifique ouvre la porte et quitte la salle.
 
-', 'Je reste sous le lit')
+
+Tu restes quelques temps sous le lit sans rien faire, abasourdi par les terribles informations que tu viens d''entendre. Lorsque tu repdrends tes esprits, que fais-tu?
+
+', 'Je reste sous le lit', 'mysterious.ogg')
+
+insert into transition(id_source, id_cible) values (300,320)
+
+insert into etat (id, description, point_entree) values (320, 'Tu ne fais rien. Tu vas t''étendre dans le lit, réfléchissant aux évenements étranges qui viennent de t''arriver.
+
+
+
+Peu de temps après (entre quinze minutes et une heure, ta perception du temps étant perturbée), un groupe de quatre personnes fait irruption dans la salle.
+
+Ils te maitrisent rapidement, et t''injectent un produit soporifique à l''aide d''une seringue.', 'Je pense avoir rêvé, je ne fais rien')
+
+insert into transition(id_source, id_cible) values (320,1000)
+
+
+
+insert into transition(id_source, id_cible) values (300,321)
+
+insert into etat (id, description, point_entree) values (321, 'Tu sors de la pièce.', 'Je sors de la salle par la porte gauche')
+
+
+
+insert into transition(id_source, id_cible) values (300,322)
+
+
+insert into etat (id, description, point_entree) values (322, 'La porte droite est VEROUILLEE, et tu remarques que la serrure porte des traces de rouille.
+
+Tu sors par la porte gauche', 'Je sors de la salle par la porte droite')
+
+
+insert into transition(id_source, id_cible) values (322,321)
+
+
 
 
 insert into transition(id_source, id_cible) values (200,301)
 
-insert into etat (id, description, point_entree) values (301, 'Tu rÃ©ussis Ã  sortir du lit sans faire aucun bruit. Tu remarques que l''homme est vÃªtu d''une blouse de laboratoire blanche. Satisfait de ta propre furtivitÃ©, tu t''avances vers la porte de droite.
+insert into etat (id, description, point_entree) values (301, 'Tu réussis à sortir du lit sans faire aucun bruit. Tu remarques que l''homme est vêtu d''une blouse de laboratoire blanche. Satisfait de ta propre furtivité, tu t''avances vers la porte de droite.
 
-Tu espÃ¨res ouvrir vite la porte, sortir de la salle, la refermer, et t''Ã©chapper Ã  tout vitesse. Tu essaies d''ouvrir la porte...', 'Je sors du lit et m''Ã©chappe par la porte droite')
+Tu espères ouvrir vite la porte, sortir de la salle, la refermer, et t''échapper à tout vitesse. Tu essaies d''ouvrir la porte...', 'Je sors du lit et m''échappe par la porte droite')
+
+insert into transition(id_source, id_cible) values (301,400)
 
 insert into etat (id, description, point_entree) values (400, 'Tu te rends compte que la porte est VEROUILLEE. L''homme au pantalon gris se retourne en entendant le bruit que tu viens de faire.
 
-Il te regarde droit dans les yeux... afin d''Ã©clater de rire. Puis il te dit d''une voix glaciale : "Tu en sais trop maintenant. Je ne vais pas essayer de me faire passer pour quelqu''un d''autre. Tu vas rester ici, que tu le veuilles ou non.
+Il te regarde droit dans les yeux... afin d''éclater de rire. Puis il te dit d''une voix glaciale : "Tu en sais trop maintenant. Je ne vais pas essayer de me faire passer pour quelqu''un d''autre. Tu vas rester ici, que tu le veuilles ou non.
 
-Il fouille dans une poche de sa blouse, et sort un... TASER. Il s''avance vers toi, le sourire aux lÃ¨vres. Tu essaies de rÃ©sister, mais c''est inutile. Tu perds conscience aprÃ¨s avoir Ã©tÃ© tasÃ© par l''homme au pantalon gris." ', 'J''essaie d''ouvrir la porte')
+Il fouille dans une poche de sa blouse, et sort un... TASER. Il s''avance vers toi, le sourire aux lèvres. Tu essaies de résister, mais c''est inutile. Tu perds conscience après avoir été tasé par l''homme au pantalon gris." ', 'J''essaie d''ouvrir la porte')
 
-
+insert into transition(id_source, id_cible) values (400,1000)
 
 
 insert into transition(id_source, id_cible) values (200,302)
 
+insert into etat (id, description, point_entree) values (302, 'Tu réussis à sortir du lit sans faire aucun bruit. Tu t''approches silencieusement du scientifique, et portes un coup fort à sa nuque.
+
+Suite à celà, l''homme en pantalon gris, qui était vêtu d''une blouse de laboratoire, perd connaissance. 
+
+
+Préfères-tu t''échapper rapidement de la salle dans laquelle tu es, ou préfères tu fouiller d''abord le scientifique? ', 'J''attaque l''homme par surprise')
 
 
 
 
-insert into etat (id, description, point_entree) values (201, 'Tu restes dans le lit. Un homme entre bientÃ´t dans la salle.', 'Je reste dans le lit sans rien faire')
 
-insert into etat (id, description, point_entree) values (202, 'EffrayÃ©, tu essaies de sortir de cette salle en actionnant la poignÃ©e de la porte droite.
+
+
+insert into etat (id, description, point_entree) values (201, 'Tu restes dans le lit. Un homme entre bientôt dans la salle.', 'Je reste dans le lit sans rien faire')
+
+insert into etat (id, description, point_entree) values (202, 'Effrayé, tu essaies de sortir de cette salle en actionnant la poignée de la porte droite.
 Malheuresement, cette porte est VEROUILLEE, tu ne sors donc pas de la salle ', 'Tu essaies de sortir par la porte droite')
 
-insert into etat (id, description, point_entree) values (203, 'EffrayÃ©, tu essaies de sortir de cette salle en actionnant la poignÃ©e de la porte gauche.
-La porte n''Ã©tant PAS VEROUILLEE, tu sors de la salle.', 'Tu essaies de sortir par la porte gauche')
+insert into etat (id, description, point_entree) values (203, 'Effrayé, tu essaies de sortir de cette salle en actionnant la poignée de la porte gauche.
+La porte n''étant PAS VEROUILLEE, tu sors de la salle.', 'Tu essaies de sortir par la porte gauche')
 
 insert into transition(id_source, id_cible) values (3,201)
 insert into transition(id_source, id_cible) values (3,202)
@@ -73,29 +119,31 @@ insert into transition(id_source, id_cible) values (3,200)
 
 
 
-insert into etat (id, description, point_entree) values (4, 'Tu te diriges vers la porte gauche. Tu tournes la poignÃ©e et tu sors de la piÃ¨ce, pour arriver dans un sombre CORRIDOR.
+insert into etat (id, description, point_entree) values (4, 'Tu te diriges vers la porte gauche. Tu tournes la poignée et tu sors de la pièce, pour arriver dans un sombre CORRIDOR.
 
-Un escalier se trouve Ã  ta droite, et le corridor vire Ã  gauche, tu ne peux donc pas en voir la fin. Tu es en train de rÃ©flÃ©chir Ã  ce que tu vas faire, quand soudainement tu entends des bruits de pas, venant du fond du couloir! Que fais tu?', 'J''essaie de sortir de la piece par la porte gauche')
+Un escalier se trouve à ta droite, et le corridor vire à gauche, tu ne peux donc pas en voir la fin. Tu es en train de réfléchir à ce que tu vas faire, quand soudainement tu entends des bruits de pas, venant du fond du couloir! Que fais tu?', 'J''essaie de sortir de la piece par la porte gauche')
 
-insert into etat (id, description, point_entree) values (5, 'Tu rentres dans la chambre. Quelques secondes aprÃ¨s avoir fermÃ© la porte, un personnage vetu de blanc' , 'je repars dans la chambre')
+insert into etat (id, description, point_entree) values (5, 'Tu rentres dans la chambre. Quelques secondes après avoir fermé la porte, un personnage vetu de blanc' , 'je repars dans la chambre')
 
 
 
-insert into etat (id, description, point_entree) values (6, 'tu patientes ... pour finalement rencontrer un personnage vetu de blanc imposant qui fait peur a voir ' , 'je patiente')
+insert into etat (id, description, point_entree) values (6, 'Tu patientes ... pour finalement rencontrer un personnage vetu d''une blouse de laboratoire blanche.
+
+Il s''avance vers toi, souriant. ' , 'je patiente')
 
 insert into etat (id, description, point_entree) values (7, 'tu prends les escaliers pour t''enfuir' , 'je prends les escaliers')
 
 
 
-insert into etat (id, description, point_entree) values (8, 'Tu suis le couloir, tu tournes Ã  gauche et tu retrouves face Ã  face Ã  un homme d''Ã¢ge moyen, vÃªtu d''une blouse de laboratoire. Cet homme, t''apercevant, Ã  l''air d''Ãªtre dÃ©sagrÃ©ablement surpris de te rencontrer, et te fixe d''un air interrogateur.
+insert into etat (id, description, point_entree) values (8, 'Tu suis le couloir, tu tournes à gauche et tu retrouves face à face à un homme d''âge moyen, vêtu d''une blouse de laboratoire. Cet homme, t''apercevant, à l''air d''être désagréablement surpris de te rencontrer, et te fixe d''un air interrogateur.
 
-PrÃ©fÃ¨res tu engager une conversation avec lui, te retourner et courir, ou bien le frapper?' ,'Je progresse dans le couloir dans la direction des bruits de pas.')
+Préfères tu engager une conversation avec lui, te retourner et courir, ou bien le frapper?' ,'Je progresse dans le couloir dans la direction des bruits de pas.')
 
-insert into etat (id, description, point_entree) values (9, 'Tu demandes la raison pour laquelle tu te trouves dans ce bÃ¢timent. La personne en blouse de laboratoire te rÃ©pond d''une voix ennuyÃ©e que suite Ã  un accident de la route, tu as Ã©tÃ© hospitalisÃ© et il semble que tu aies perdu une partie une partie de ta mÃ©moire.
+insert into etat (id, description, point_entree) values (9, 'Tu demandes la raison pour laquelle tu te trouves dans ce bâtiment. La personne en blouse de laboratoire te répond d''une voix ennuyée que suite à un accident de la route, tu as été hospitalisé et il semble que tu aies perdu une partie une partie de ta mémoire.
 
 Elle te demande poliment de regagner ta chambre et d''attendre.
 
-Regardant autour de toi, tu remarques que ces lieux ne ressemblent pas vraiment Ã  un hopital. Le scientifique fait demi-tour, et...' , 'J''engage la conversation.')
+Regardant autour de toi, tu remarques que ces lieux ne ressemblent pas vraiment à un hopital. Le scientifique fait demi-tour, et...' , 'J''engage la conversation.')
 
 insert into etat (id, description, point_entree) values (10, 'tu prends la fuite ' , 'Je fais demi-tour, et je m''enfuis!')
 
@@ -125,18 +173,45 @@ insert into etat (id, description, point_entree) values (101, 'Tu te penches et 
 Puis soudainement tu entends des bruits de pas!' , 'Je regarde ce qu''il y a en dessous du lit.')
 insert into transition(id_source, id_cible) values (2,101)
 
-insert into etat (id, description, point_entree) values (102, 'Tu te diriges vers la porte droite et tu essaies de tourner la poignÃ©e. Mais la porte est vÃ©rouillÃ©e! Tu remarques une serrure rouilÃ©e sous la poignÃ©e.
+insert into etat (id, description, point_entree) values (102, 'Tu te diriges vers la porte droite et tu essaies de tourner la poignée. Mais la porte est vérouillée! Tu remarques une serrure rouilée sous la poignée.
 
  Puis soudainement tu entends des bruits de pas! ' , 'je veux sortir par la porte droite.')
 insert into transition(id_source, id_cible) values (2,102)
-insert into etat (id, description, point_entree) values (110, 'tu te caches sous le lit' , 'je me cache sous le lit')
-insert into etat (id, description, point_entree) values (111, 'Tu patientes. Les bruits de pas se rapprochent' , 'Je patiente.')
-insert into etat (id, description, point_entree) values (112, 'Tu essayes de sortir par la porte droite. Malheuresement, elle est vÃ©rouillÃ©e.' , 'Je sorts de la piÃ¨ce par la porte droite.')
-insert into etat (id, description, point_entree) values (113, 'Tu reviens dans le lit. Les bruits de pas se rapprochent...' , 'Je reviens Ã  l''intÃ©rieur du lit et je feins le sommeil.')
-insert into etat (id, description, point_entree) values (114, 'Tu tournes la poignÃ©e et tu sors de la piÃ¨ce.' , 'Je sors de la piÃ¨ce par la porte gauche')
+
+insert into etat (id, description, point_entree) values (111, 'Tu patientes tranquillement dans la pièce. Un personnage vêtu d''une blous de laboratoire blanche et ayant un pantalon gris entre dans la pièce. Il est moyennement âgé et affiche un sourire éclatant.
+
+Il t''aborde de la manière suivante: 
+
+"Bonjour! Vous vous demandez sûrement pourquoi vous êtes ici. Il se trouve que vous avez été victime d''un accident de la route et que vous êtes sujet à une amnésie partielle. Nous allons vous fournir un traitement afin que vous récupéreriez la mémoire.
+Veuillez bien me suivre."
+
+Le scientifique ouvre la porte située à ta gauche, sors de la pièce, et tu le suis. 
+
+Vous arrivez dans un sombre CORRIDOR. Un escalier se trouve à ta droite, et le corridor vire à gauche.
+
+Le scientifique et toi allez à gauche. Vous apercevez un ascenseur au bout du couloir. Vous allez vers l''ascenseur. Le scientifique pose sa main sur un détecteur d''empreinte digitale, puis la porte  de l''ascenseur se ferme.
+
+Les étages vont de -2 à 4, en sachant que 0 est le rez-de-chaussée. Le scientifique appuie sur le bouton -1. Les portes s''ouvrent, donnant sur un couloir ressemblant à celui d''un hopital.' , 'Je patiente.')
+
+
+insert into transition(id_source, id_cible) values (111,500)
+
+insert into etat (id, description, point_entree) values (500, 'Le scientifique marche tout droit pendant un certain temps, puis entre dans une salle sur la gauche. Il te demande de t''installer sur un brancard pour commencer l''opération. Tu t''éxécutes. Il t''injecte un produit à l''aide d''une seingue. 
+
+Ta vision s''assombrit, et tu plonges dans le sommeil.' , 'Je continue à suivre le scientifique')
+
+insert into transition(id_source, id_cible) values (500,501)
+
+insert into etat (id, description, point_entree, fichier_musique) values (501, 'Lorsque tu ' , 'Je me réveille.', 'abyss.ogg' )
+
+
+
+insert into etat (id, description, point_entree) values (112, 'Tu essayes de sortir par la porte droite. Malheuresement, elle est vérouillée.' , 'Je sors de la pièce par la porte droite.')
+insert into etat (id, description, point_entree) values (113, 'Tu reviens dans le lit. Les bruits de pas se rapprochent...' , 'Je reviens à l''intérieur du lit et je feins le sommeil.')
+insert into etat (id, description, point_entree) values (114, 'Tu tournes la poignée et tu sors de la pièce.' , 'Je sors de la pièce par la porte gauche')
 
  
-insert into transition(id_source, id_cible) values (102,110)
+insert into transition(id_source, id_cible) values (102,200)
 insert into transition(id_source, id_cible) values (102,111)
 insert into transition(id_source, id_cible) values (102,112)
 insert into transition(id_source, id_cible) values (102,113)
@@ -146,4 +221,15 @@ insert into transition(id_source, id_cible) values (101,111)
 insert into transition(id_source, id_cible) values (101,112)
 insert into transition(id_source, id_cible) values (101,113)
 insert into transition(id_source, id_cible) values (101,114)	
+
+insert into etat (id, description, point_entree) values (1000, 'Tu es capturé par les hommes de science diaboliques du complexe scientifique HAGALAB. 
+
+Ils t''enferment dans le sous-sol du batiment qui est en fait un laboratoire géant où tu seras utilisé comme cobaye humain, jusqu''à la fin de ta vie.
+
+
+La partie est FINIE. Mais tu peux recommencer en cliquant sur point de départ, et peux-être que tu obtiendras une fin meilleure', 'Game Over')
+
+insert into transition(id_source, id_cible) values (1000,1)	
+
+
 
