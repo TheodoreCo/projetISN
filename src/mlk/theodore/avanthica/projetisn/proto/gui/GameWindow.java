@@ -16,6 +16,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.DefaultListModel;
@@ -23,6 +24,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JList;
+import javax.swing.JMenu;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -39,6 +41,9 @@ import mlk.theodore.avanthica.projetisn.proto.db.Db;
 import mlk.theodore.avanthica.projetisn.proto.middle.Choix;
 import mlk.theodore.avanthica.projetisn.proto.middle.Etat;
 import javax.swing.border.EtchedBorder;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JSeparator;
 
 public class GameWindow {
 
@@ -47,12 +52,24 @@ public class GameWindow {
 	private JTextArea taEtat;
 	private JButton playMusicBtn;
 	private JButton stopMusicBtn;
+	// Mémorise l'historique des états pour pouvoir exécuter le 'Back'
+	// qui va faire un retour arrière vers l'avant-dernier élément de cette
+	// liste
+	private List<Integer> stateHistory = new ArrayList<>();
 
-	// variable utilisée pour retenir l'objet Music courant (nécessaire pour la bibliothèque TinyMusic)
+	// variable utilisée pour retenir l'objet Music courant (nécessaire pour la
+	// bibliothèque TinyMusic)
 	private Music currentPlayingMusic;
-	
-	// retient le nom du fichier de musique pour pouvoir l'utilser depuis les boutons Start & Stop music
+
+	// retient le nom du fichier de musique pour pouvoir l'utilser depuis les
+	// boutons Start & Stop music
 	private String currentPlayingFile;
+	private JMenuBar menuBar;
+	private JMenuItem mntmBack;
+	private JSeparator separator;
+	private JMenuItem mntmExit;
+	private JMenu mnAbout;
+	private JMenuItem mntmCredits;
 
 	/**
 	 * Launch the application.
@@ -70,9 +87,10 @@ public class GameWindow {
 						}
 					}
 				} catch (Exception e) {
-					// e.printStackTrace(); Pas besoin de faire quelque chose de spécifique
+					// e.printStackTrace(); Pas besoin de faire quelque chose de
+					// spécifique
 				}
-				
+
 				try {
 					GameWindow window = new GameWindow();
 					window.mainFrame.setVisible(true);
@@ -98,22 +116,21 @@ public class GameWindow {
 		mainFrame = new JFrame();
 		mainFrame.getContentPane().setBackground(Color.WHITE);
 		// mainFrame.setBackground(Color.WHITE);
- 		mainFrame.setTitle("HAGALAB");
+		mainFrame.setTitle("HAGALAB");
 		mainFrame.getContentPane().setLayout(new GridBagLayout());
-		
+
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
 		Dimension tailleEcran = toolkit.getScreenSize();
 
-		mainFrame.setBounds(tailleEcran.width * 1 / 5,
-				tailleEcran.height * 1 / 4,
-				tailleEcran.width * 3 / 5,
+		mainFrame.setBounds(tailleEcran.width * 1 / 5, tailleEcran.height * 1 / 4, tailleEcran.width * 3 / 5,
 				tailleEcran.height * 2 / 4);
 		mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		JScrollPane scrollPane = new JScrollPane();
 		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.insets = new Insets(0, 0, 5, 0);
 		gbc.gridx = 0;
-		gbc.gridy = 0;
+		gbc.gridy = 1;
 		gbc.fill = GridBagConstraints.BOTH;
 		gbc.weightx = 1;
 		gbc.weighty = 1;
@@ -121,29 +138,33 @@ public class GameWindow {
 		taEtat.setBackground(new Color(0, 0, 0)); // black
 		taEtat.setForeground(new Color(255, 255, 255)); // white
 		taEtat.setFont(new Font("MS Reference Sans Serif", Font.PLAIN, 13));
-		taEtat.setMargin(new Insets(10, 10, 10, 10)); // Laisser de l'espace autour du texte
+		taEtat.setMargin(new Insets(10, 10, 10, 10)); // Laisser de l'espace
+														// autour du texte
 		taEtat.setLineWrap(true); // Pour passer automatiquement à la ligne
 		taEtat.setWrapStyleWord(true); // Pour ne pas couper les mots
 		taEtat.setEditable(false);
-		scrollPane.setViewportView(taEtat); // C'est le "add" spécifique lorsque l'on veut lier un composant (comme une JTextArea) à
+		scrollPane.setViewportView(taEtat); // C'est le "add" spécifique lorsque
+											// l'on veut lier un composant
+											// (comme une JTextArea) à
 		// un ScollPane
 		mainFrame.getContentPane().add(scrollPane, gbc);
 
 		listeDecision = new JList<>();
 		listeDecision.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listeDecision.setFont(new Font("MS Reference Sans Serif", Font.PLAIN, 13));
-		
-		// Rajout d'un listener pour les doubles-click sur un élément de la liste
+
+		// Rajout d'un listener pour les doubles-click sur un élément de la
+		// liste
 		listeDecision.addMouseListener(new MouseAdapter() {
-	
+
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 2) {
 					Choix choix = getListeDecision().getSelectedValue();
-					updateState(choix.getId());	
+					updateState(choix.getId());
 				}
 			}
-			
+
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				mainFrame.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -164,10 +185,11 @@ public class GameWindow {
 				}
 			}
 		});
-		
+
 		GridBagConstraints gbc2 = new GridBagConstraints();
+		gbc2.insets = new Insets(0, 0, 5, 0);
 		gbc2.gridx = 0;
-		gbc2.gridy = 1;
+		gbc2.gridy = 2;
 		gbc2.weighty = 1;
 		gbc2.fill = GridBagConstraints.BOTH;
 		mainFrame.getContentPane().add(listeDecision, gbc2);
@@ -194,12 +216,13 @@ public class GameWindow {
 
 		JPanel panel = new JPanel();
 		panel.setBorder(null);
-		
+
 		panel.setBackground(Color.WHITE);
 		panel.setForeground(Color.BLACK);
 		GridBagConstraints gbc3 = new GridBagConstraints();
+		gbc3.insets = new Insets(0, 0, 5, 0);
 		gbc3.gridx = 0;
-		gbc3.gridy = 2;
+		gbc3.gridy = 3;
 		mainFrame.getContentPane().add(panel, gbc3);
 		panel.add(okButton);
 
@@ -239,15 +262,81 @@ public class GameWindow {
 		});
 		panel.add(stopMusicBtn);
 
+		menuBar = new JMenuBar();
+		GridBagConstraints gbc_menuBar = new GridBagConstraints();
+		gbc_menuBar.anchor = GridBagConstraints.WEST;
+		gbc_menuBar.gridx = 0;
+		gbc_menuBar.gridy = 0;
+
+		JMenu mnGameMenu = new JMenu("Game");
+
+		JMenuItem mntmNewGame = new JMenuItem("New Game");
+		mntmNewGame.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				updateState(1);
+			}
+		});
+
+		mnGameMenu.add(mntmNewGame);
+
+		menuBar.add(mnGameMenu);
+
+		mntmBack = new JMenuItem("Back");
+		mntmBack.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				back();
+			}
+		});
+
+		mnGameMenu.add(mntmBack);
+
+		separator = new JSeparator();
+		mnGameMenu.add(separator);
+
+		mntmExit = new JMenuItem("Exit");
+		mntmExit.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				exitApplication();
+				System.exit(0);
+			}
+		});
+		mnGameMenu.add(mntmExit);
+		mainFrame.getContentPane().add(menuBar, gbc_menuBar);
+
+		mnAbout = new JMenu("About");
+		menuBar.add(mnAbout);
+
+		mntmCredits = new JMenuItem("Credits...");
+		mnAbout.add(mntmCredits);
+
 		mainFrame.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
-				super.windowClosing(e);
-				Db.disconnect();
-				TinySound.shutdown();
+				exitApplication();
 			}
 		});
 		fillInitialScreen();
+	}
+
+	private void back() {
+		if (stateHistory.size() >= 2) {
+			int oldPosition = stateHistory.size() - 2;
+			int oldValue = stateHistory.get(oldPosition);
+			updateState(oldValue);
+			// On supprime les deux derniers éléments de la statehistory (updateState() rajoute un élément)
+			stateHistory.remove(stateHistory.size() - 1);
+			stateHistory.remove(stateHistory.size() - 1);
+		}
+	}
+
+	private void exitApplication() {
+		Db.disconnect();
+		TinySound.shutdown();
 	}
 
 	/**
@@ -263,15 +352,13 @@ public class GameWindow {
 		}
 	}
 
-	protected JList<Choix> getListeDecision() {
+	private JList<Choix> getListeDecision() {
 		return listeDecision;
 	}
 
-	protected JTextArea getTaEtat() {
-		return taEtat;
-	}
-
 	private void updateState(int position) {
+		stateHistory.add(position);
+
 		Etat etat = Db.getEtat(position);
 		taEtat.setText(etat.getDescription());
 

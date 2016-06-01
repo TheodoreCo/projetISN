@@ -31,10 +31,10 @@ insert into transition(id_source, id_cible) values (200,300)
 
 insert into etat (id, description, point_entree, fichier_musique) values (300, 'Tu restes sous le lit. L''homme sort un petit téléphone de la poche de son pantalon, puis crie d''une voix forte et angoissée dans le téléphone:
 
-LE SUJET NUMERO 42 S''EST ECHAPPE! Retrouvez le! Il ne faut surtout pas qu''il quitte hagalab... sinon il deviendrera un danger pour nous... Empechez le de sortir, qu''il soit vivant ou mort. Sur ce, le scientifique ouvre la porte et quitte la salle.
+LE SUJET NUMERO 42 S''EST ECHAPPE! Retrouvez le! Il ne faut surtout pas qu''il quitte Hagalab... sinon il deviendrera un danger pour nous... Empechez le de sortir, qu''il soit vivant ou mort. Sur ce, le scientifique ouvre la porte et quitte la salle.
 
 
-Tu restes quelques temps sous le lit sans rien faire, abasourdi par les terribles informations que tu viens d''entendre. Lorsque tu repdrends tes esprits, que fais-tu?
+Tu restes quelques temps sous le lit sans rien faire, abasourdi par les terribles informations que tu viens d''entendre. Lorsque tu reprends tes esprits, que fais-tu?
 
 ', 'Je reste sous le lit', 'mysterious.ogg')
 
@@ -123,7 +123,7 @@ insert into etat (id, description, point_entree) values (4, 'Tu te diriges vers 
 
 Un escalier se trouve à ta droite, et le corridor vire à gauche, tu ne peux donc pas en voir la fin. Tu es en train de réfléchir à ce que tu vas faire, quand soudainement tu entends des bruits de pas, venant du fond du couloir! Que fais tu?', 'J''essaie de sortir de la piece par la porte gauche')
 
-insert into etat (id, description, point_entree) values (5, 'Tu rentres dans la chambre. Quelques secondes après avoir fermé la porte, un personnage vetu de blanc' , 'je repars dans la chambre')
+
 
 
 
@@ -131,7 +131,36 @@ insert into etat (id, description, point_entree) values (6, 'Tu patientes ... po
 
 Il s''avance vers toi, souriant. ' , 'je patiente')
 
-insert into etat (id, description, point_entree) values (7, 'tu prends les escaliers pour t''enfuir' , 'je prends les escaliers')
+insert into etat (id, description, point_entree) values (7, 'Les escaliers mènent vers le haut. Arrivé à l'étage supérieur, tu vois devant toi un long couloir.
+
+Il y a quatre portes dans ce couloir. Une porte se situe à ta droite, une autre à ta gauche. Les deux autres portes sont à l'autre bout du couloir. A l''autre bout du couloir se trouvent aussi un escalier et un ascenseur.
+
+
+
+
+' , 'Je prends les escaliers')
+
+
+insert into transition (id_source, id_cible) values (7,600)
+insert into etat (id, description, point_entree) values (600, 'Tu ouvres la porte de droite. ' , 'J''ouvre la porte de droite')
+
+
+insert into transition (id_source, id_cible) values (7,601)
+insert into etat (id, description, point_entree) values (601, 'Tu ouvres la porte de gauche. ' , 'J''ouvre la porte de gauche. Je trouve une caisse')
+
+
+
+insert into transition (id_source, id_cible) values (7,602)
+insert into etat (id, description, point_entree) values (602, 'Tu avances dans le couloir. ' , 'J''avance dans le couloir')
+
+insert into transition (id_source, id_cible) values (7,603)
+
+insert into etat (id, description, point_entree) values (603, 'Tu reviens sur tes pas. ' , 'Je reviens sur mes pas ')
+
+
+
+
+
 
 
 
@@ -154,7 +183,7 @@ insert into etat (id, description, point_entree,fichier_musique) values (11,' ',
 insert into transition(id_source, id_cible) values (1,2)
 insert into transition(id_source, id_cible) values (1,3)
 insert into transition(id_source, id_cible) values (2,4)
-insert into transition(id_source, id_cible) values (4,5)
+
 insert into transition(id_source, id_cible) values (4,6)
 insert into transition(id_source, id_cible) values (4,7)
 insert into transition(id_source, id_cible) values (4,8)
@@ -163,7 +192,7 @@ insert into transition(id_source, id_cible) values (8,10)
 insert into transition(id_source, id_cible) values (8,11)
 
 insert into transition(id_source, id_cible) values (5,9)
-insert into transition(id_source, id_cible) values (5,10)
+
 insert into transition(id_source, id_cible) values (6,9)
 insert into transition(id_source, id_cible) values (6,10)
 
@@ -196,7 +225,7 @@ Les étages vont de -2 à 4, en sachant que 0 est le rez-de-chaussée. Le scientifi
 
 insert into transition(id_source, id_cible) values (111,500)
 
-insert into etat (id, description, point_entree) values (500, 'Le scientifique marche tout droit pendant un certain temps, puis entre dans une salle sur la gauche. Il te demande de t''installer sur un brancard pour commencer l''opération. Tu t''éxécutes. Il t''injecte un produit à l''aide d''une seingue. 
+insert into etat (id, description, point_entree) values (500, 'Le scientifique marche tout droit pendant un certain temps, puis entre dans une salle sur la gauche. Il te demande de t''installer sur un brancard pour commencer l''opération. Tu t''éxécutes. Il t''injecte un produit à l''aide d''une seringue. 
 
 Ta vision s''assombrit, et tu plonges dans le sommeil.' , 'Je continue à suivre le scientifique')
 
@@ -209,7 +238,6 @@ insert into etat (id, description, point_entree, fichier_musique) values (501, '
 insert into etat (id, description, point_entree) values (112, 'Tu essayes de sortir par la porte droite. Malheuresement, elle est vérouillée.' , 'Je sors de la pièce par la porte droite.')
 insert into etat (id, description, point_entree) values (113, 'Tu reviens dans le lit. Les bruits de pas se rapprochent...' , 'Je reviens à l''intérieur du lit et je feins le sommeil.')
 insert into etat (id, description, point_entree) values (114, 'Tu tournes la poignée et tu sors de la pièce.' , 'Je sors de la pièce par la porte gauche')
-
  
 insert into transition(id_source, id_cible) values (102,200)
 insert into transition(id_source, id_cible) values (102,111)
@@ -227,7 +255,7 @@ insert into etat (id, description, point_entree) values (1000, 'Tu es capturé pa
 Ils t''enferment dans le sous-sol du batiment qui est en fait un laboratoire géant où tu seras utilisé comme cobaye humain, jusqu''à la fin de ta vie.
 
 
-La partie est FINIE. Mais tu peux recommencer en cliquant sur point de départ, et peux-être que tu obtiendras une fin meilleure', 'Game Over')
+La partie est FINIE. Mais tu peux recommencer en cliquant sur point de départ, et peux-être que tu obtiendras une fin meilleure.', 'Game Over')
 
 insert into transition(id_source, id_cible) values (1000,1)	
 
