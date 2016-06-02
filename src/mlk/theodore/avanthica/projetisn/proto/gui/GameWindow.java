@@ -2,6 +2,7 @@ package mlk.theodore.avanthica.projetisn.proto.gui;
 
 import java.awt.Color;
 import java.awt.Cursor;
+import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
@@ -15,6 +16,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,9 +28,12 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
 import javax.swing.JTextArea;
 import javax.swing.ListSelectionModel;
 import javax.swing.UIManager;
@@ -40,10 +46,6 @@ import kuusisto.tinysound.TinySound;
 import mlk.theodore.avanthica.projetisn.proto.db.Db;
 import mlk.theodore.avanthica.projetisn.proto.middle.Choix;
 import mlk.theodore.avanthica.projetisn.proto.middle.Etat;
-import javax.swing.border.EtchedBorder;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JSeparator;
 
 public class GameWindow {
 
@@ -70,6 +72,7 @@ public class GameWindow {
 	private JMenuItem mntmExit;
 	private JMenu mnAbout;
 	private JMenuItem mntmCredits;
+	private JMenuItem mntmContrles;
 
 	/**
 	 * Launch the application.
@@ -135,14 +138,33 @@ public class GameWindow {
 		gbc.weightx = 1;
 		gbc.weighty = 1;
 		taEtat = new JTextArea();
+		taEtat.setEditable(false);
 		taEtat.setBackground(new Color(0, 0, 0)); // black
 		taEtat.setForeground(new Color(255, 255, 255)); // white
 		taEtat.setFont(new Font("MS Reference Sans Serif", Font.PLAIN, 13));
 		taEtat.setMargin(new Insets(10, 10, 10, 10)); // Laisser de l'espace
 														// autour du texte
 		taEtat.setLineWrap(true); // Pour passer automatiquement à la ligne
-		taEtat.setWrapStyleWord(true); // Pour ne pas couper les mots
-		taEtat.setEditable(false);
+		taEtat.setWrapStyleWord(true);
+		taEtat.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (e.isControlDown()) {
+					taEtat.setEditable(true);
+				}
+
+				if (e.isShiftDown()) {
+					try {
+						Db.updateDescription(stateHistory.get(stateHistory.size() - 1), taEtat.getText());
+					} catch (SQLException ex) {
+						JOptionPane.showMessageDialog(mainFrame, "Erreur d'accès à la base: " + ex.getMessage(),
+								"Attention", JOptionPane.ERROR_MESSAGE);
+						ex.printStackTrace();
+					}
+					taEtat.setEditable(false);
+				}
+			}
+		});
 		scrollPane.setViewportView(taEtat); // C'est le "add" spécifique lorsque
 											// l'on veut lier un composant
 											// (comme une JTextArea) à
@@ -284,6 +306,7 @@ public class GameWindow {
 		menuBar.add(mnGameMenu);
 
 		mntmBack = new JMenuItem("Back");
+		mntmBack.setToolTipText("Mais c'est de la triche!");
 		mntmBack.addActionListener(new ActionListener() {
 
 			@Override
@@ -312,7 +335,48 @@ public class GameWindow {
 		menuBar.add(mnAbout);
 
 		mntmCredits = new JMenuItem("Credits...");
+		mntmCredits.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				CreditsDialog creditsDialog = new CreditsDialog();
+				creditsDialog.pack(); // La taille de la fenêtre des crédits
+										// s'adapte automatiquement
+				creditsDialog.setLocationRelativeTo(mainFrame); // CEntre la
+																// fenêtre des
+																// crédits.
+				creditsDialog.setVisible(true);
+			}
+		});
 		mnAbout.add(mntmCredits);
+
+		mntmContrles = new JMenuItem("Contr\u00F4les");
+		mntmContrles.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ControlsDialog controlsDialog = new ControlsDialog();
+				controlsDialog.pack();
+				controlsDialog.setLocationRelativeTo(mainFrame);
+				controlsDialog.setVisible(true);
+			}
+		});
+		mnAbout.add(mntmContrles);
+		JMenuItem mntmDoc = new JMenuItem("Documentation");
+		mntmDoc.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					if (Desktop.isDesktopSupported()) {
+						Desktop.getDesktop().open(new File("./doc/Compte_rendu_ISN.docx"));
+					}
+				} catch (IOException ioe) {
+					ioe.printStackTrace();
+				}
+			}
+		});
+		mnAbout.add(mntmDoc);
 
 		mainFrame.addWindowListener(new WindowAdapter() {
 			@Override
@@ -328,7 +392,8 @@ public class GameWindow {
 			int oldPosition = stateHistory.size() - 2;
 			int oldValue = stateHistory.get(oldPosition);
 			updateState(oldValue);
-			// On supprime les deux derniers éléments de la statehistory (updateState() rajoute un élément)
+			// On supprime les deux derniers éléments de la statehistory
+			// (updateState() rajoute un élément)
 			stateHistory.remove(stateHistory.size() - 1);
 			stateHistory.remove(stateHistory.size() - 1);
 		}

@@ -1,7 +1,6 @@
 package mlk.theodore.avanthica.projetisn.proto.middle;
 
 import java.io.BufferedInputStream;
-import java.io.File;
 import java.io.IOException;
 
 import javax.sound.sampled.AudioFormat;
@@ -10,6 +9,8 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.DataLine;
 import javax.sound.sampled.SourceDataLine;
 
+// n'est plus utilisée car remplacée par la biblithèque TinySound
+@Deprecated
 public class PlaySound {
 	private static final int BUFFER_SIZE = 4000;
 	private static Thread playingThread;

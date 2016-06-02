@@ -108,4 +108,35 @@ public class Db {
 		}
 		return listeChoix;
 	}
+	
+	/**
+	 * Met à jour la description pour l'id de la table Etat
+	 * @param idEtat La ligne à mettre à jour
+	 * @param newDescription La nouvelle description
+	 */
+	public static void updateDescription(int idEtat, String newDescription) throws SQLException {
+//		PreparedStatement ps = null;
+//		try {
+//			ps = con.prepareStatement("UPDATE Etat SET description=? WHERE id=?");
+//			ps.setString(1, newDescription);
+//			ps.setInt(2, idEtat);
+//			ps.executeUpdate();
+//			// Pas nécessaire, car nous sommes en autocommit = true
+//			// con.commit();
+//		} finally {
+//			if (ps != null) {try {ps.close();} catch (Exception ignored) {}}
+//		}
+		
+		
+
+		try (PreparedStatement ps = con.prepareStatement("UPDATE Etat SET description=? WHERE id=?")){
+			ps.setString(1, newDescription);
+			ps.setInt(2, idEtat);
+			ps.executeUpdate();
+			// Pas nécessaire, car nous sommes en autocommit = true
+			// con.commit();
+		}
+	}
 }
+
+	
