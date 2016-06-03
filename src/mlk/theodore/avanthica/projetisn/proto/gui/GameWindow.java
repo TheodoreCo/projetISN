@@ -369,7 +369,7 @@ public class GameWindow {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					if (Desktop.isDesktopSupported()) {
-						Desktop.getDesktop().open(new File("./doc/Compte_rendu_ISN.docx"));
+						Desktop.getDesktop().open(new File("./doc/Projet_ISN.docx"));
 					}
 				} catch (IOException ioe) {
 					ioe.printStackTrace();
